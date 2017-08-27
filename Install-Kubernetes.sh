@@ -12,9 +12,9 @@ K8_SUB_DOMAIN_ENV=$KOPS_HOME/k8-sub-domain.json
 SSH_KEY_HOME=$KOPS_HOME/$SUBDOMAIN_NAME/sshkeys
 
 getSubDomain() {
-    read -p "Hello, what is the sub-domain ?. : " SUBDOMAIN_NAME
+    read -p "Hello, what is the SUB-DOMAIN ?. : " SUBDOMAIN_NAME
 	if [[ $SUBDOMAIN_NAME == "" ]]; then
-		echo "Exiting... sub-domain is mandatory"
+		echo "Exiting... SUB-DOMAIN is MANDATORY"
 		exit
 	fi
 }
@@ -146,7 +146,7 @@ drawMenu() {
 
 	# Set a foreground colour using ANSI escape
 	tput setaf 3
-	echo "Karmasoc INC."
+	echo "ACloudSoft INC."
 	tput sgr0
 
 	tput cup 5 17
@@ -177,7 +177,7 @@ tput sgr0
 # set deployservice list
 case $choice in
 	1)
-		echo "--------------"
+		echo "#########################"
 		echo "Starting a clean INSTALL."
 		getSubDomain
 		clean
@@ -186,20 +186,20 @@ case $choice in
 		createResourceRecordSet "$SUBDOMAIN_NAME"
 		createRecordInParentDomain
 
-		echo "--------------"
+		echo "#########################"
 		;;
 	2)
-		echo "--------------"
+		echo "#########################"
 		echo "Starting a Kubectl INSTALL."
 		installKubectl
-		echo "--------------"
+		echo "#########################"
 		;;
 	3)
-		echo "--------------"
+		echo "#########################"
 		echo "Creating Cluster."
 		getSubDomain
 		createCluster
-		echo "--------------"
+		echo "#########################"
 		;;
 	*)
 		echo "Error: Please try again (select 1..3)!"
