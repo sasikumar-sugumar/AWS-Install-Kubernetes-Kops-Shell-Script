@@ -104,19 +104,30 @@ chmod 777 Install-Kubernetes.sh
 	    chmod +x ./kubectl
 	    sudo mv ./kubectl /usr/local/bin/kubectl
     - [x] createSubDomain.
-        Create Hosted-Zone for the SUB-DOMAIN provided and write the output to a file
+        Create Hosted-Zone in route53 for the SUB-DOMAIN provided and write the output to hosted-zone.json in the current directory
     - [x] createResourceRecordSet.
-        SUBDOMAIN_NAME=$1
-	    jq '. | .Changes[0].ResourceRecordSet.Name="'"$SUBDOMAIN_NAME"'"' $K8_SUB_DOMAIN_ENV >>$KOPS_HOME/k8-sub-domain-updated.json
-	    mv $KOPS_HOME/k8-sub-domain-updated.json $K8_SUB_DOMAIN_ENV
-	    echo "Created Sub-Domain $SUBDOMAIN_NAME"
-        rm -rf $HOSTED_ZONE_FILE
-	    ID=$(uuidgen) && aws route53 create-hosted-zone --name $SUBDOMAIN_NAME --caller-reference $ID >>$HOSTED_ZONE_FILE
-		createSubDomain
-		createComment "k8 subdomain $SUBDOMAIN_NAME"
-		createResourceRecordSet "$SUBDOMAIN_NAME"
-		createRecordInParentDomain
-
-
-End with an example of getting some data out of the system or using it for a little demo
-
+        Replace the placeholders in k8-sub-domian.json template with the actual value using hosted-zone.json and user provided sub-domain
+    - [x] createRecordInParentDomain.
+        * Get the parent domain hosted zone id.
+        * Create a record in the parent domain using the k8-sub-domain.json.
+        * Grab the Change ID from the above operation
+    - [x] waitForINSYNC.
+        * Wait until the DNS Change takes effect (look for the status INSYNC)
+    - [x] waitForINSYNC.  
+        * Once the status of the DNS change is INSYNC, create SSH Keys.
+        * Create the S3 Bucket using the SUB-DOMAIN (e.g : SUB-DOMAIN-kubernetes-state) and export KOPS_STATE_STORE
+        * Create Cluster running 
+        ```
+        kops create cluster --v=0 \
+		--cloud=aws \
+		--node-count 2 \
+		--master-size=t2.medium \
+		--master-zones=us-east-1a \
+		--zones us-east-1a,us-east-1b \
+		--name=$SUBDOMAIN_NAME \
+		--node-size=m3.xlarge \
+		--ssh-public-key=$SSH_PUBLIC_KEY \
+		--dns-zone $SUBDOMAIN_NAME \
+		2>&1 | tee $KOPS_HOME/create_cluster.txt
+        ```
+        * Update cluster with option --YES
