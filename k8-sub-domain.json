@@ -1,0 +1,24 @@
+{
+    "Comment": "$COMMENT",
+    "Changes": [{
+        "Action": "CREATE",
+        "ResourceRecordSet": {
+            "Name": "$SUBDOMAINNAME",
+            "Type": "NS",
+            "TTL": 300,
+            "ResourceRecords": [{
+                    "Value": "$VALUE1"
+                },
+                {
+                    "Value": "$VALUE2"
+                },
+                {
+                    "Value": "$VALUE3"
+                },
+                {
+                    "Value": "$VALUE4"
+                }
+            ]
+        }
+    }]
+}
