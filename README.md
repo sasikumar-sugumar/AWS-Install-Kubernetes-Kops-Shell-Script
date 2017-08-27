@@ -127,6 +127,16 @@ sudo mv ./kubectl /usr/local/bin/kubectl
     * Wait until the DNS Change takes effect (look for the status INSYNC)
 - [x] createCluster.  
     * Once the status of the DNS change is INSYNC, create SSH Keys.
+        ```
+        #create directory for subdomain
+        mkdir -p $KOPS_HOME/$SUBDOMAIN_NAME
+        touch $KUBE_CONFIG_HOME
+        export KUBECONFIG="$KUBE_CONFIG_HOME"
+        # create ssh key home
+        mkdir $SSH_KEY_HOME
+        # generate ssh key
+        ssh-keygen -f $SSH_KEY_HOME/id_rsa -t rsa #save the key in the sshkeys
+        ```
     * Create the S3 Bucket using the SUB-DOMAIN (e.g : SUB-DOMAIN-kubernetes-state) and export KOPS_STATE_STORE
         ```
         aws s3 rb s3://$SUBDOMAIN_NAME-kubernetes-state
