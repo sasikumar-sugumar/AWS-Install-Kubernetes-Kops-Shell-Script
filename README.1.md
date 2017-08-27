@@ -38,13 +38,13 @@ chmod 777 Install-Kubernetes.sh
 
 - [AWS Command Line](https://aws.amazon.com/cli/)
 - [./jq](https://stedolan.github.io/jq/)
-- IAM user permission
-    The IAM user to create the Kubernetes cluster must have the following permissions:
-    AmazonEC2FullAccess
-    AmazonRoute53FullAccess
-    AmazonS3FullAccess
-    IAMFullAccess
-    AmazonVPCFullAccess
+- [IAM user permission]
+    - The IAM user to create the Kubernetes cluster must have the following permissions:
+    - AmazonEC2FullAccess
+    - AmazonRoute53FullAccess
+    - AmazonS3FullAccess
+    - IAMFullAccess
+    - AmazonVPCFullAccess
 - A valid domain 
 
 ### Installing
