@@ -113,16 +113,16 @@ sudo mv ./kubectl /usr/local/bin/kubectl
     * Replace the placeholders in k8-sub-domian.json template with the actual value using hosted-zone.json and user provided sub-domain
 - [x] createRecordInParentDomain.
     * Get the parent domain hosted zone id.
-    ```
-    PARENT_HOSTED_ZONE_ID=$(aws route53 list-hosted-zones | jq --raw-output '. | .HostedZones[0].Id')
+        ```
+        PARENT_HOSTED_ZONE_ID=$(aws route53 list-hosted-zones | jq --raw-output '. | .HostedZones[0].Id')
 
-    ```
+        ```
     * Create a record in the parent domain using the k8-sub-domain.json and grab the Change ID
-    ```
-    CHANGE_ID=$(aws route53 change-resource-record-sets \
-		--hosted-zone-id $PARENT_HOSTED_ZONE_ID \
-		--change-batch file://$KOPS_HOME/k8-sub-domain.json | jq --raw-output '. | .ChangeInfo.Id')
-    ```
+        ```
+        CHANGE_ID=$(aws route53 change-resource-record-sets \
+            --hosted-zone-id $PARENT_HOSTED_ZONE_ID \
+            --change-batch file://$KOPS_HOME/k8-sub-domain.json | jq --raw-output '. | .ChangeInfo.Id')
+        ```
 - [x] waitForINSYNC.
     * Wait until the DNS Change takes effect (look for the status INSYNC)
 - [x] createCluster.  
