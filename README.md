@@ -130,19 +130,19 @@ sudo mv ./kubectl /usr/local/bin/kubectl
     * Create the S3 Bucket using the SUB-DOMAIN (e.g : SUB-DOMAIN-kubernetes-state) and export KOPS_STATE_STORE
     * Create and update cluster running --yes
     
-```
-kops create cluster --v=0 \
-		--cloud=aws \
-		--node-count 2 \
-		--master-size=t2.medium \
-		--master-zones=us-east-1a \
-		--zones us-east-1a,us-east-1b \
-		--name=$SUBDOMAIN_NAME \
-		--node-size=m3.xlarge \
-		--ssh-public-key=$SSH_PUBLIC_KEY \
-		--dns-zone $SUBDOMAIN_NAME \
-		2>&1 | tee $KOPS_HOME/create_cluster.txt  
+        ```
+        kops create cluster --v=0 \
+                --cloud=aws \
+                --node-count 2 \
+                --master-size=t2.medium \
+                --master-zones=us-east-1a \
+                --zones us-east-1a,us-east-1b \
+                --name=$SUBDOMAIN_NAME \
+                --node-size=m3.xlarge \
+                --ssh-public-key=$SSH_PUBLIC_KEY \
+                --dns-zone $SUBDOMAIN_NAME \
+                2>&1 | tee $KOPS_HOME/create_cluster.txt  
 
-kops update cluster $SUBDOMAIN_NAME --yes   
-```
+        kops update cluster $SUBDOMAIN_NAME --yes   
+        ```
 
