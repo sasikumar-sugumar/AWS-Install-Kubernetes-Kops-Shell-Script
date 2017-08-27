@@ -117,13 +117,12 @@ sudo mv ./kubectl /usr/local/bin/kubectl
     PARENT_HOSTED_ZONE_ID=$(aws route53 list-hosted-zones | jq --raw-output '. | .HostedZones[0].Id')
 
     ```
-    * Create a record in the parent domain using the k8-sub-domain.json.
+    * Create a record in the parent domain using the k8-sub-domain.json and grab the Change ID
     ```
     CHANGE_ID=$(aws route53 change-resource-record-sets \
 		--hosted-zone-id $PARENT_HOSTED_ZONE_ID \
 		--change-batch file://$KOPS_HOME/k8-sub-domain.json | jq --raw-output '. | .ChangeInfo.Id')
     ```
-    * Grab the Change ID from the above operation
 - [x] waitForINSYNC.
     * Wait until the DNS Change takes effect (look for the status INSYNC)
 - [x] createCluster.  
