@@ -94,19 +94,19 @@ chmod 777 Install-Kubernetes.sh
 This installs kubernetes from scratch , following sequence of operations are performed
 - [x] installKops : Install kops using the below script
 
-```
-wget https://github.com/kubernetes/kops/releases/download/1.6.1/kops-linux-amd64
-chmod +x kops-linux-amd64
-sudo mv kops-linux-amd64 /usr/local/bin/kops
-```
+    ```
+    wget https://github.com/kubernetes/kops/releases/download/1.6.1/kops-linux-amd64
+    chmod +x kops-linux-amd64
+    sudo mv kops-linux-amd64 /usr/local/bin/kops
+    ```
 - [x] installKubectl : Install kubectl using the below script
 
-```
-curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl
-chmod +x ./kubectl
-sudo mv ./kubectl /usr/local/bin/kubectl
-```
+    ```
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl
+    chmod +x ./kubectl
+    sudo mv ./kubectl /usr/local/bin/kubectl
+    ```
 - [x] createSubDomain.
     * Create Hosted-Zone in route53 for the SUB-DOMAIN provided and write the output to hosted-zone.json in the current directory
 - [x] createResourceRecordSet.
