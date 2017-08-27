@@ -159,17 +159,20 @@ drawMenu() {
 	echo "1. Clean Install Kubernetes"
 
 	tput cup 8 15
-	echo "2. Install Kubectl"
+	echo "2. Install kops"
 
 	tput cup 9 15
-	echo "3. Create K8 Cluster"
+	echo "3. Install Kubectl"
+
+	tput cup 10 15
+	echo "4. Create K8 Cluster"
 
 	# Set bold mode
 	tput bold
 	tput cup 12 15
 	# The default value for PS3 is set to #?.
 	# Change it i.e. Set PS3 prompt
-	read -p "Enter your choice [1-3] " choice
+	read -p "Enter your choice [1-4] " choice
 }
 
 drawMenu
@@ -190,11 +193,17 @@ case $choice in
 		;;
 	2)
 		echo "#########################"
+		echo "Starting a Kops INSTALL."
+		installKops
+		echo "#########################"
+		;;
+	3)
+		echo "#########################"
 		echo "Starting a Kubectl INSTALL."
 		installKubectl
 		echo "#########################"
 		;;
-	3)
+	4)
 		echo "#########################"
 		echo "Creating Cluster."
 		getSubDomain
