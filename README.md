@@ -91,34 +91,35 @@ chmod 777 Install-Kubernetes.sh
                Enter your choice [1-4]
 
 # Clean Install Kubernetes
-    This installs kubernetes from scratch , following sequence of operations are performed
-    - [x] installKops.
-        install kops using the below script
-        wget https://github.com/kubernetes/kops/releases/download/1.6.1/kops-linux-amd64
-	    chmod +x kops-linux-amd64
-	    sudo mv kops-linux-amd64 /usr/local/bin/kops
-    - [x] installKubectl.
-        install kubectl using the below script
-        curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-	    curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl
-	    chmod +x ./kubectl
-	    sudo mv ./kubectl /usr/local/bin/kubectl
-    - [x] createSubDomain.
-        Create Hosted-Zone in route53 for the SUB-DOMAIN provided and write the output to hosted-zone.json in the current directory
-    - [x] createResourceRecordSet.
-        Replace the placeholders in k8-sub-domian.json template with the actual value using hosted-zone.json and user provided sub-domain
-    - [x] createRecordInParentDomain.
-        * Get the parent domain hosted zone id.
-        * Create a record in the parent domain using the k8-sub-domain.json.
-        * Grab the Change ID from the above operation
-    - [x] waitForINSYNC.
-        * Wait until the DNS Change takes effect (look for the status INSYNC)
-    - [x] waitForINSYNC.  
-        * Once the status of the DNS change is INSYNC, create SSH Keys.
-        * Create the S3 Bucket using the SUB-DOMAIN (e.g : SUB-DOMAIN-kubernetes-state) and export KOPS_STATE_STORE
-        * Create Cluster running 
-        ```
-        kops create cluster --v=0 \
+This installs kubernetes from scratch , following sequence of operations are performed
+- [x] installKops.
+    install kops using the below script
+    wget https://github.com/kubernetes/kops/releases/download/1.6.1/kops-linux-amd64
+	chmod +x kops-linux-amd64
+	sudo mv kops-linux-amd64 /usr/local/bin/kops
+- [x] installKubectl.
+    install kubectl using the below script
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+	curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl
+	chmod +x ./kubectl
+	sudo mv ./kubectl /usr/local/bin/kubectl
+- [x] createSubDomain.
+    Create Hosted-Zone in route53 for the SUB-DOMAIN provided and write the output to hosted-zone.json in the current directory
+- [x] createResourceRecordSet.
+    Replace the placeholders in k8-sub-domian.json template with the actual value using hosted-zone.json and user provided sub-domain
+- [x] createRecordInParentDomain.
+    * Get the parent domain hosted zone id.
+    * Create a record in the parent domain using the k8-sub-domain.json.
+    * Grab the Change ID from the above operation
+- [x] waitForINSYNC.
+    * Wait until the DNS Change takes effect (look for the status INSYNC)
+- [x] waitForINSYNC.  
+    * Once the status of the DNS change is INSYNC, create SSH Keys.
+    * Create the S3 Bucket using the SUB-DOMAIN (e.g : SUB-DOMAIN-kubernetes-state) and export KOPS_STATE_STORE
+    * Create Cluster running 
+    
+```
+kops create cluster --v=0 \
 		--cloud=aws \
 		--node-count 2 \
 		--master-size=t2.medium \
@@ -128,6 +129,7 @@ chmod 777 Install-Kubernetes.sh
 		--node-size=m3.xlarge \
 		--ssh-public-key=$SSH_PUBLIC_KEY \
 		--dns-zone $SUBDOMAIN_NAME \
-		2>&1 | tee $KOPS_HOME/create_cluster.txt
-        ```
-        * Update cluster with option --YES
+		2>&1 | tee $KOPS_HOME/create_cluster.txt     
+```
+    * Update cluster with option --YES
+
