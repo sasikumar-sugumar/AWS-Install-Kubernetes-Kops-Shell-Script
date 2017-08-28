@@ -108,9 +108,68 @@ This installs kubernetes from scratch , following sequence of operations are per
     sudo mv ./kubectl /usr/local/bin/kubectl
     ```
 - [x] createSubDomain.
-    * Create Hosted-Zone in route53 for the SUB-DOMAIN provided and write the output to hosted-zone.json in the current directory
+    * Create Hosted-Zone in route53 for the SUB-DOMAIN provided and write the output to hosted-zone.json in the current directory, e.g as 
+    
+            ```
+            {
+            "HostedZone": {
+                "ResourceRecordSetCount": 2, 
+                "CallerReference": "55f51815-d8c6-4606-ad42-e13b0ec04fd3", 
+                "Config": {
+                    "PrivateZone": false
+                }, 
+                "Id": "/hostedzone/Z3KNE0DHIB7S7X", 
+                "Name": "your.subdomain.com."
+            }, 
+            "DelegationSet": {
+                "NameServers": [
+                    "ns-479.awsdns-59.com", 
+                    "ns-1220.awsdns-24.org", 
+                    "ns-1682.awsdns-18.co.uk", 
+                    "ns-570.awsdns-07.net"
+                ]
+            }, 
+            "Location": "https://route53.amazonaws.com/2013-04-01/hostedzone/Z3KNE0DHIB7S7X", 
+            "ChangeInfo": {
+                "Status": "PENDING", 
+                "SubmittedAt": "2017-08-27T02:41:58.809Z", 
+                "Id": "/change/C1CFYDZW9Y2O5Q"
+            }
+        }
+    ```
 - [x] createResourceRecordSet.
-    * Replace the placeholders in k8-sub-domian.json template with the actual value using hosted-zone.json and user provided sub-domain
+    * Replace the placeholders in k8-sub-domian.json template with the actual value using hosted-zone.json and user provided sub-domain , the result would look something like below.
+
+        ```
+            {
+        "Comment": "k8 subdomain your.subdomain.com",
+        "Changes": [
+            {
+            "Action": "CREATE",
+            "ResourceRecordSet": {
+                "Name": "your.subdomain.com",
+                "Type": "NS",
+                "TTL": 300,
+                "ResourceRecords": [
+                {
+                    "Value": "ns-479.awsdns-59.com"
+                },
+                {
+                    "Value": "ns-1220.awsdns-24.org"
+                },
+                {
+                    "Value": "ns-1682.awsdns-18.co.uk"
+                },
+                {
+                    "Value": "ns-570.awsdns-07.net"
+                }
+                ]
+            }
+            }
+        ]
+        }
+        ```
+
 - [x] createRecordInParentDomain.
     * Get the parent domain hosted zone id.
         ```
