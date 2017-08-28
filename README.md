@@ -52,7 +52,10 @@ chmod 777 Install-Kubernetes.sh
 
 ### Resource Record Set Template
 
-```k8-sub-domian.json
+The Record Set Template with placeholder is processed in runtime and replaced with real values
+
+```
+k8-sub-domian.json
 {
     "Comment": "$COMMENT",
     "Changes": [{
@@ -113,7 +116,7 @@ This installs kubernetes from scratch , following sequence of operations are per
         ```
             ID=$(uuidgen) && aws route53 create-hosted-zone --name $SUBDOMAIN_NAME --caller-reference $ID >>$HOSTED_ZONE_FILE
         ```
-        
+
     * hosted-zone.json
 
         ```
