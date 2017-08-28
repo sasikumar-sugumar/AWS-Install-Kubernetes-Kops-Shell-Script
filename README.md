@@ -111,6 +111,8 @@ This installs kubernetes from scratch , following sequence of operations are per
     * Create Hosted-Zone in route53 for the SUB-DOMAIN provided and write the output to hosted-zone.json in the current directory, e.g as below
     
         ```
+            ID=$(uuidgen) && aws route53 create-hosted-zone --name $SUBDOMAIN_NAME --caller-reference $ID >>$HOSTED_ZONE_FILE
+    
             {
                 "HostedZone": {
                     "ResourceRecordSetCount": 2, 
