@@ -184,6 +184,15 @@ This installs kubernetes from scratch , following sequence of operations are per
         ```
 - [x] waitForINSYNC.
     * Wait until the DNS Change takes effect (look for the status INSYNC)
+        ```
+        while [[ $CHANGE_STATUS == "PENDING" ]]; do
+		echo "TAKING A NAP FOR 5S"
+		sleep 5s
+		CHANGE_STATUS=$(aws route53 get-change --id $CHANGE_ID | jq --raw-output '. | .ChangeInfo.Status')
+		echo "CHANGE Status : $CHANGE_STATUS"
+	    done
+
+        ```
 - [x] createCluster.  
     * Once the status of the DNS change is INSYNC, create SSH Keys.
         ```
