@@ -110,8 +110,8 @@ This installs kubernetes from scratch , following sequence of operations are per
 - [x] createSubDomain.
     * Create Hosted-Zone in route53 for the SUB-DOMAIN provided and write the output to hosted-zone.json in the current directory, e.g as 
     
-            ```
-            {
+        ```
+        {
             "HostedZone": {
                 "ResourceRecordSetCount": 2, 
                 "CallerReference": "55f51815-d8c6-4606-ad42-e13b0ec04fd3", 
@@ -141,7 +141,7 @@ This installs kubernetes from scratch , following sequence of operations are per
     * Replace the placeholders in k8-sub-domian.json template with the actual value using hosted-zone.json and user provided sub-domain , the result would look something like below.
 
         ```
-            {
+        {
         "Comment": "k8 subdomain your.subdomain.com",
         "Changes": [
             {
