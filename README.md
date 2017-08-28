@@ -108,7 +108,7 @@ This installs kubernetes from scratch , following sequence of operations are per
     sudo mv ./kubectl /usr/local/bin/kubectl
     ```
 - [x] createSubDomain.
-    * Create Hosted-Zone in route53 for the SUB-DOMAIN provided and write the output to hosted-zone.json in the current directory, e.g as 
+    * Create Hosted-Zone in route53 for the SUB-DOMAIN provided and write the output to hosted-zone.json in the current directory, e.g as below
     
         ```
         {
