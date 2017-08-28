@@ -172,11 +172,12 @@ This installs kubernetes from scratch , following sequence of operations are per
 
 - [x] createRecordInParentDomain.
     * Get the parent domain hosted zone id.
-        ```
-        PARENT_HOSTED_ZONE_ID=$(aws route53 list-hosted-zones | jq --raw-output '. | .HostedZones[0].Id')
 
         ```
+        PARENT_HOSTED_ZONE_ID=$(aws route53 list-hosted-zones | jq --raw-output '. | .HostedZones[0].Id')
+        ```
     * Create a record in the parent domain using the k8-sub-domain.json and grab the Change ID
+
         ```
         CHANGE_ID=$(aws route53 change-resource-record-sets \
             --hosted-zone-id $PARENT_HOSTED_ZONE_ID \
@@ -184,6 +185,7 @@ This installs kubernetes from scratch , following sequence of operations are per
         ```
 - [x] waitForINSYNC.
     * Wait until the DNS Change takes effect (look for the status INSYNC)
+
         ```
         while [[ $CHANGE_STATUS == "PENDING" ]]; do
 		echo "TAKING A NAP FOR 5S"
@@ -191,10 +193,10 @@ This installs kubernetes from scratch , following sequence of operations are per
 		CHANGE_STATUS=$(aws route53 get-change --id $CHANGE_ID | jq --raw-output '. | .ChangeInfo.Status')
 		echo "CHANGE Status : $CHANGE_STATUS"
 	    done
-
         ```
 - [x] createCluster.  
     * Once the status of the DNS change is INSYNC, create SSH Keys.
+
         ```
         #create directory for subdomain
         mkdir -p $KOPS_HOME/$SUBDOMAIN_NAME
