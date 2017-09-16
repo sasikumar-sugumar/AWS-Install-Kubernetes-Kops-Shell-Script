@@ -197,7 +197,7 @@ case $choice in
 		clean
 		installAWSClient
 		installKops
-		installKubectlinstallKubectl
+		installKubectl
 		createSubDomain
 		createComment "k8 subdomain $SUBDOMAIN_NAME"
 		createResourceRecordSet "$SUBDOMAIN_NAME"
