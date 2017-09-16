@@ -11,6 +11,17 @@ K8_SUB_DOMAIN_DEFAULT=$KOPS_HOME/k8-sub-domain-default.json
 K8_SUB_DOMAIN_ENV=$KOPS_HOME/k8-sub-domain.json
 SSH_KEY_HOME=$KOPS_HOME/$SUBDOMAIN_NAME/sshkeys
 
+installAWSClient() {
+	# update repository
+	sudo apt-get update
+	# install python-pip
+	sudo apt install python-pip
+	#install AWS client
+	pip install awscli --upgrade --user
+	#install jq
+	sudo apt-get install jq
+}
+
 getSubDomain() {
     read -p "Hello, what is the SUB-DOMAIN ?. : " SUBDOMAIN_NAME
 	if [[ $SUBDOMAIN_NAME == "" ]]; then
@@ -64,7 +75,7 @@ createSubDomain() {
 createComment() {
 	COMMENT=$1
 	jq '. | .Comment="'"$COMMENT"'"' $K8_SUB_DOMAIN_DEFAULT >>$K8_SUB_DOMAIN_ENV
-	echo "Created Comment $COMMENT"
+	echo "Created  $COMMENT"
 }
 
 createResourceRecordSet() {
@@ -184,6 +195,7 @@ case $choice in
 		echo "Starting a clean INSTALL."
 		getSubDomain
 		clean
+		installAWSClient
 		createSubDomain
 		createComment "k8 subdomain $SUBDOMAIN_NAME"
 		createResourceRecordSet "$SUBDOMAIN_NAME"
