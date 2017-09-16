@@ -196,11 +196,13 @@ case $choice in
 		getSubDomain
 		clean
 		installAWSClient
+		installKops
+		installKubectlinstallKubectl
 		createSubDomain
 		createComment "k8 subdomain $SUBDOMAIN_NAME"
 		createResourceRecordSet "$SUBDOMAIN_NAME"
 		createRecordInParentDomain
-
+		createCluster
 		echo "#########################"
 		;;
 	2)
