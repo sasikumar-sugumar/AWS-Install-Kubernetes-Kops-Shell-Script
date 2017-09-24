@@ -143,6 +143,11 @@ createCluster() {
 	echo "############# UPDATE CLUSTER ENDS ################"
 }
 
+deleteCluster() {
+	rm -rf $K8_SUB_DOMAIN_ENV
+	rm -rf $KOPS_HOME/k8-sub-domain-updated.json
+}
+
 clean() {
 	rm -rf $K8_SUB_DOMAIN_ENV
 	rm -rf $KOPS_HOME/k8-sub-domain-updated.json
@@ -178,12 +183,15 @@ drawMenu() {
 	tput cup 10 15
 	echo "4. Create K8 Cluster"
 
+	tput cup 12 15
+	echo "5. Delete Cluster"
+
 	# Set bold mode
 	tput bold
-	tput cup 12 15
+	tput cup 14 15
 	# The default value for PS3 is set to #?.
 	# Change it i.e. Set PS3 prompt
-	read -p "Enter your choice [1-4] " choice
+	read -p "Enter your choice [1-5] " choice
 }
 
 drawMenu
@@ -217,6 +225,13 @@ case $choice in
 		echo "#########################"
 		;;
 	4)
+		echo "#########################"
+		echo "Creating Cluster."
+		getSubDomain
+		createCluster
+		echo "#########################"
+		;;
+	5)
 		echo "#########################"
 		echo "Creating Cluster."
 		getSubDomain
