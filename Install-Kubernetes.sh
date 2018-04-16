@@ -28,6 +28,8 @@ getSubDomain() {
 		echo "Exiting... SUB-DOMAIN is MANDATORY"
 		exit
 	fi
+	# craete kops home if it does not exist
+	mkdir -p $KOPS_HOME
 }
 
 installKubectl() {
